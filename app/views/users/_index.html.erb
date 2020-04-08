@@ -13,19 +13,25 @@
     <tr>
       <td><%= attachment_image_tag(user, :profile_image, :fill, 50, 50, fallback: "no-image-mini.jpg") %></td>
       <td><%= user.name%></td>
-      <!-- フォロー機能 -->
+      <!--↓フォロー機能-->
       <td>フォロー数：<%= user.follower.count %></td>
       <td>フォロワー数：<%= user.followed.count %></td>
       <td>
+        <!--↓users一覧のユーザーが自分以外のとき-->
         <% if current_user != user %>
+          <!--↓自分が該当ユーザーをフォローしているとき-->
           <% if current_user.following?(user) %>
             <%= link_to 'フォロー解除', user_relationships_path(user.id), method: :delete %>
-        <% else %>
-          <%= link_to 'フォローする', user_relationships_path(user.id),method: :POST %>
+          <!--↑自分が該当ユーザーをフォローしているとき-->
+          <!--↓自分が該当ユーザーをフォローしていないとき-->
+          <% else %>
+            <%= link_to 'フォローする', user_relationships_path(user.id),method: :POST %>
           <% end %>
+          <!--↑自分が該当ユーザーをフォローしていないとき-->
         <% end %>
-        <!-- フォロー機能 -->
+        <!--↑users一覧のユーザーが自分以外のとき-->
       </td>
+      <!--↑フォロー機能-->
       <td><%= link_to "Show", user, class: "user_#{user.id}" %></td>
     </tr>
     <% end %>
